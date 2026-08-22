@@ -71,7 +71,7 @@ export default function RecommendationsPage() {
             {request.location} · ₹{request.budget.toLocaleString("en-IN")} budget · {request.style}
           </p>
         </div>
-        <button onClick={() => router.push("/")} className="btn-ghost hidden shrink-0 sm:inline-flex">
+        <button onClick={() => router.push("/?edit=1")} className="btn-ghost hidden shrink-0 sm:inline-flex">
           Edit details
         </button>
       </header>

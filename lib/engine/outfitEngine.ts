@@ -26,10 +26,17 @@ export function generateOutfits(
   const baseStyleTags = Array.from(new Set([...requestStyleTags, ...occasionProfile.defaultStyleTags]));
 
   const outfits: Outfit[] = [];
-  const silhouettes = occasionProfile.silhouettes;
+  // The mock catalog only carries dresses for women — for men/unisex requests, drop "dress"
+  // from the occasion's silhouette options so those requests always resolve to a top+bottom
+  // look instead of silently losing the top and bottom slots to an unfillable dress silhouette.
+  const silhouettes: Silhouette[] =
+    request.gender === "women"
+      ? occasionProfile.silhouettes
+      : occasionProfile.silhouettes.filter((s) => s !== "dress");
+  const effectiveSilhouettes: Silhouette[] = silhouettes.length > 0 ? silhouettes : ["topBottom"];
 
   // Look 1: primary silhouette, standard matching.
-  const silhouette1: Silhouette = silhouettes[0];
+  const silhouette1: Silhouette = effectiveSilhouettes[0];
   outfits.push(
     composeOutfit({
       request,
@@ -47,7 +54,7 @@ export function generateOutfits(
   );
 
   // Look 2: alternate silhouette if the occasion supports one, else a reordered style variant.
-  const silhouette2: Silhouette = silhouettes[1] ?? silhouette1;
+  const silhouette2: Silhouette = effectiveSilhouettes[1] ?? silhouette1;
   const styleVariant2 = baseStyleTags.length > 1 ? [...baseStyleTags].reverse() : baseStyleTags;
   const colorVariant2 = [...occasionProfile.colorBias].reverse();
   const look2 = composeOutfit({
