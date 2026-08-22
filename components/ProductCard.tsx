@@ -5,7 +5,12 @@ export function ProductCard({ item }: { item: OutfitItem }) {
   return (
     <div className="card flex flex-col overflow-hidden">
       <div className="aspect-[4/3] w-full">
-        <ItemGraphic category={item.slot} color={item.color} imageDataUrl={item.imageDataUrl} />
+        <ItemGraphic
+          category={item.slot}
+          color={item.color}
+          imageDataUrl={item.imageDataUrl}
+          imageUrl={item.imageUrl}
+        />
       </div>
       <div className="flex flex-1 flex-col p-3.5">
         <p className="text-[13px] font-medium leading-snug text-ink">{item.name}</p>

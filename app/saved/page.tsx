@@ -45,7 +45,12 @@ export default function SavedLooksPage() {
               <div className="grid grid-cols-2 gap-0.5 bg-ink/5 p-0.5">
                 {look.outfit.items.slice(0, 4).map((item) => (
                   <div key={`${item.slot}-${item.refId}`} className="aspect-square overflow-hidden">
-                    <ItemGraphic category={item.slot} color={item.color} imageDataUrl={item.imageDataUrl} />
+                    <ItemGraphic
+                      category={item.slot}
+                      color={item.color}
+                      imageDataUrl={item.imageDataUrl}
+                      imageUrl={item.imageUrl}
+                    />
                   </div>
                 ))}
               </div>
