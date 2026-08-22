@@ -1,5 +1,6 @@
 import { Product, ClothingCategory, StyleTag, Gender, Platform } from "@/lib/types";
 import { buildBuyUrl } from "@/lib/data/urls";
+import { buildImageUrl } from "@/lib/data/images";
 
 let counter = 0;
 function p(
@@ -25,6 +26,7 @@ function p(
     platform,
     url: buildBuyUrl(platform, name),
     image: `${category}:${color}`,
+    imageUrl: buildImageUrl(category, subCategory, gender),
     isDemoData: true,
   };
 }

@@ -2,20 +2,25 @@ import { ClothingCategory } from "@/lib/types";
 import { colorHex, readableTextOn } from "@/lib/ui/colors";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import clsx from "clsx";
+import { useState } from "react";
 
 export function ItemGraphic({
   category,
   color,
   className,
   imageDataUrl,
+  imageUrl,
   size = "md",
 }: {
   category: ClothingCategory;
   color: string;
   className?: string;
   imageDataUrl?: string;
+  imageUrl?: string;
   size?: "sm" | "md" | "lg";
 }) {
+  const [stockImageFailed, setStockImageFailed] = useState(false);
+
   if (imageDataUrl) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
@@ -23,6 +28,18 @@ export function ItemGraphic({
         src={imageDataUrl}
         alt={`${color} ${category}`}
         className={clsx("h-full w-full object-cover", className)}
+      />
+    );
+  }
+
+  if (imageUrl && !stockImageFailed) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={imageUrl}
+        alt={`${color} ${category}`}
+        className={clsx("h-full w-full object-cover", className)}
+        onError={() => setStockImageFailed(true)}
       />
     );
   }

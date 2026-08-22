@@ -162,6 +162,7 @@ function toOutfitItem(slot: ClothingCategory, source: "wardrobe" | "catalog", it
     color: pr.color,
     price: pr.price,
     image: pr.image,
+    imageUrl: pr.imageUrl,
     platform: pr.platform,
     url: pr.url,
   };
