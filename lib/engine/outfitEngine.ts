@@ -1,6 +1,6 @@
 import { Outfit, OutfitRequest, RefinementConstraints, StyleTag, WardrobeItem } from "@/lib/types";
 import { parseOccasion, parseStyleTags, Silhouette } from "@/lib/engine/parse";
-import { composeOutfit, emptyConstraints } from "@/lib/engine/compose";
+import { composeOutfit, emptyConstraints, requiredSlots } from "@/lib/engine/compose";
 import { parseRefinementInstruction } from "@/lib/engine/refine";
 
 function lookName(styleTags: StyleTag[], occasionLabel: string, silhouette: Silhouette): string {
@@ -72,12 +72,22 @@ export function generateOutfits(
   });
   if (!looksIdentical(look2, outfits[0])) outfits.push(look2);
 
-  // Look 3: "wardrobe hero" — maximize reuse of owned items on the primary silhouette.
+  // Look 3: "wardrobe hero" — maximize reuse of owned items. Pick whichever silhouette the
+  // occasion allows actually matches the most confirmed wardrobe items, rather than always
+  // reusing the primary silhouette — e.g. a wedding defaults to a dress silhouette, but a
+  // wardrobe full of separates should still produce a genuinely wardrobe-first top+bottom look.
+  const confirmedWardrobe = wardrobe.filter((w) => w.confirmed);
+  const wardrobeFit = (s: Silhouette) =>
+    confirmedWardrobe.filter((w) => requiredSlots(s).includes(w.category)).length;
+  const silhouette3: Silhouette = effectiveSilhouettes.reduce((best, s) =>
+    wardrobeFit(s) > wardrobeFit(best) ? s : best
+  , silhouette1);
+
   const wardrobeConstraints: RefinementConstraints = { ...emptyConstraints(), wardrobePreferenceBoost: 2 };
   const look3 = composeOutfit({
     request,
     lookName: `Wardrobe-First ${occasionProfile.label} Look`,
-    silhouette: silhouette1,
+    silhouette: silhouette3,
     wardrobe,
     styleTags: baseStyleTags,
     colorBias: occasionProfile.colorBias,
@@ -155,6 +165,7 @@ export function refineOutfit(
     constraints: mergedConstraints,
     refinementHistory,
     budgetOverride,
+    id: outfit.id,
   });
 
   return { outfit: refined, appliedSummary: parsed.appliedSummary };
