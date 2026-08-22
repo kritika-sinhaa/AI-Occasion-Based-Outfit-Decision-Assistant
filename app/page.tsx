@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAppStore } from "@/lib/store/useAppStore";
 import { Gender, OutfitRequest } from "@/lib/types";
 import clsx from "clsx";
@@ -9,36 +9,51 @@ import clsx from "clsx";
 const STYLE_SUGGESTIONS = ["Minimal & Elegant", "Classic & Formal", "Boho & Casual", "Chic & Trendy", "Edgy"];
 
 export default function HomePage() {
+  return (
+    <Suspense fallback={null}>
+      <HomePageInner />
+    </Suspense>
+  );
+}
+
+function HomePageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  // Only "Edit details" links to /?edit=1 — a plain visit to Home (nav link, fresh tab, first
+  // visit) always starts blank, even if a request from an earlier session is still in the store.
+  const isEditing = searchParams.get("edit") === "1";
   const request = useAppStore((s) => s.request);
   const setRequest = useAppStore((s) => s.setRequest);
   const loadDemoScenario = useAppStore((s) => s.loadDemoScenario);
   const wardrobeCount = useAppStore((s) => s.wardrobe.length);
   const hasHydrated = useAppStore((s) => s.hasHydrated);
 
-  const [occasion, setOccasion] = useState(request?.occasion ?? "");
-  const [location, setLocation] = useState(request?.location ?? "");
-  const [date, setDate] = useState(request?.date ?? "");
-  const [budget, setBudget] = useState(request?.budget ? String(request.budget) : "");
-  const [style, setStyle] = useState(request?.style ?? "");
-  const [gender, setGender] = useState<Gender>(request?.gender ?? "women");
+  const [occasion, setOccasion] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
+  const [budget, setBudget] = useState("");
+  const [style, setStyle] = useState("");
+  const [gender, setGender] = useState<Gender>("women");
   const [error, setError] = useState<string | null>(null);
-  const [prefilled, setPrefilled] = useState(false);
 
-  // The store hydrates from localStorage after first render, so an existing request
-  // (e.g. arriving here via "Edit details") isn't available on the initial useState call above —
-  // fill the form in once hydration completes.
+  // The store hydrates from localStorage asynchronously, so the existing request isn't
+  // available on the initial useState calls above — fill the form in once hydration
+  // completes. This only runs on the one mount right after "Edit details" navigates here
+  // (isEditing flips this page to a fresh route), so it can't race with input on this page.
   useEffect(() => {
-    if (!hasHydrated || prefilled || !request) return;
+    if (!isEditing || !hasHydrated || !request) return;
     setOccasion(request.occasion);
     setLocation(request.location);
     setDate(request.date);
     setBudget(String(request.budget));
     setStyle(request.style);
     setGender(request.gender);
-    setPrefilled(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasHydrated, request]);
+  }, [isEditing, hasHydrated]);
+
+  // Avoid rendering a blank form that then visibly "pops" to prefilled values once hydration
+  // resolves — wait for it on the one flow that actually prefills.
+  if (isEditing && !hasHydrated) return null;
 
   function buildRequest(): OutfitRequest | null {
     if (!occasion.trim()) {
