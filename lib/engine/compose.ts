@@ -28,6 +28,11 @@ export interface ComposeParams {
   refinementHistory: string[];
   /** Budget can be overridden by an explicit refinement ("keep it under ₹3000") */
   budgetOverride?: number;
+  /** Catalog/wardrobe item ids to avoid reusing — e.g. items already shown in this session's
+   *  other looks, so "Regenerate looks" surfaces different picks instead of the identical result
+   *  a fully deterministic engine would otherwise return. Falls back to the excluded item if it's
+   *  the only candidate, so a look is never left unfillable just to satisfy this preference. */
+  excludeRefIds?: string[];
 }
 
 const EMPTY_CONSTRAINTS: RefinementConstraints = {
@@ -84,15 +89,20 @@ function pickWardrobeItem(
   wardrobe: WardrobeItem[],
   styleTags: StyleTag[],
   colorBias: string[],
-  constraints: RefinementConstraints
+  constraints: RefinementConstraints,
+  excludeRefIds: string[] = []
 ): WardrobeItem | null {
-  const candidates = wardrobe.filter(
+  const all = wardrobe.filter(
     (w) => w.category === slot && w.confirmed && !isExcluded(w.color, w.subCategory, constraints)
   );
-  if (candidates.length === 0) return null;
+  // Prefer an item not already used elsewhere in this session, but fall back to the full
+  // pool if that exclusion would leave no candidate at all.
+  const candidates = all.filter((w) => !excludeRefIds.includes(w.id));
+  const pool = candidates.length > 0 ? candidates : all;
+  if (pool.length === 0) return null;
 
   const boosted = constraints.wardrobePreferenceBoost > 0;
-  const scored = candidates
+  const scored = pool
     .map((w) => ({ item: w, score: scoreStyleColor(w.styleTags, w.color, styleTags, colorBias) }))
     .sort((a, b) => b.score - a.score);
 
@@ -108,7 +118,8 @@ function pickCatalogProduct(
   styleTags: StyleTag[],
   colorBias: string[],
   constraints: RefinementConstraints,
-  cheapestOnly = false
+  cheapestOnly = false,
+  excludeRefIds: string[] = []
 ): Product | null {
   let candidates = catalog.filter(
     (pr) =>
@@ -128,11 +139,16 @@ function pickCatalogProduct(
 
   if (candidates.length === 0) return null;
 
+  // Prefer a product not already used elsewhere in this session, but fall back to the full
+  // pool if that exclusion would leave no candidate at all.
+  const fresh = candidates.filter((pr) => !excludeRefIds.includes(pr.id));
+  const pool = fresh.length > 0 ? fresh : candidates;
+
   if (cheapestOnly) {
-    return [...candidates].sort((a, b) => a.price - b.price)[0];
+    return [...pool].sort((a, b) => a.price - b.price)[0];
   }
 
-  const scored = candidates
+  const scored = pool
     .map((pr) => ({ item: pr, score: scoreStyleColor(pr.styleTags, pr.color, styleTags, colorBias) }))
     .sort((a, b) => b.score - a.score || a.item.price - b.item.price);
   return scored[0].item;
@@ -184,6 +200,7 @@ export function composeOutfit(params: ComposeParams): Outfit {
     constraints,
     refinementHistory,
   } = params;
+  const excludeRefIds = params.excludeRefIds ?? [];
   const catalog = getCatalog();
   const styleTags = effectiveStyleTags(params.styleTags, constraints);
   const budget = params.budgetOverride ?? request.budget;
@@ -198,12 +215,21 @@ export function composeOutfit(params: ComposeParams): Outfit {
 
   // Pass 1: fill required slots, wardrobe first.
   for (const slot of required) {
-    const owned = pickWardrobeItem(slot, wardrobe, styleTags, colorBias, constraints);
+    const owned = pickWardrobeItem(slot, wardrobe, styleTags, colorBias, constraints, excludeRefIds);
     if (owned) {
       items.push(toOutfitItem(slot, "wardrobe", owned));
       continue;
     }
-    const product = pickCatalogProduct(slot, catalog, request.gender, styleTags, colorBias, constraints);
+    const product = pickCatalogProduct(
+      slot,
+      catalog,
+      request.gender,
+      styleTags,
+      colorBias,
+      constraints,
+      false,
+      excludeRefIds
+    );
     if (product) {
       items.push(toOutfitItem(slot, "catalog", product));
     } else {
@@ -249,13 +275,22 @@ export function composeOutfit(params: ComposeParams): Outfit {
 
   // Pass 2: add optional slots only if they fit within the remaining budget.
   for (const slot of optional) {
-    const owned = pickWardrobeItem(slot, wardrobe, styleTags, colorBias, constraints);
+    const owned = pickWardrobeItem(slot, wardrobe, styleTags, colorBias, constraints, excludeRefIds);
     if (owned) {
       items.push(toOutfitItem(slot, "wardrobe", owned));
       continue;
     }
     if (!withinBudget) continue; // don't pile on more cost when already over budget
-    const product = pickCatalogProduct(slot, catalog, request.gender, styleTags, colorBias, constraints);
+    const product = pickCatalogProduct(
+      slot,
+      catalog,
+      request.gender,
+      styleTags,
+      colorBias,
+      constraints,
+      false,
+      excludeRefIds
+    );
     if (product && requiredCost() + product.price <= budget) {
       items.push(toOutfitItem(slot, "catalog", product));
     }

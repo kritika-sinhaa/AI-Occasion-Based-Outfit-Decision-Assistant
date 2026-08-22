@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const request: OutfitRequest = body.request;
     const wardrobe: WardrobeItem[] = body.wardrobe ?? [];
+    const excludeRefIds: string[] = Array.isArray(body.excludeRefIds) ? body.excludeRefIds : [];
 
     if (!request || !request.occasion || !request.budget) {
       return NextResponse.json({ error: "Occasion and budget are required." }, { status: 400 });
@@ -15,7 +16,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Budget must be a positive number." }, { status: 400 });
     }
 
-    const outfits = generateOutfits(request, wardrobe.filter((w) => w.confirmed));
+    const outfits = generateOutfits(request, wardrobe.filter((w) => w.confirmed), excludeRefIds);
     return NextResponse.json({ outfits });
   } catch (err) {
     return NextResponse.json({ error: "Could not generate outfits. Please try again." }, { status: 500 });

@@ -10,8 +10,17 @@ function lookName(styleTags: StyleTag[], occasionLabel: string, silhouette: Silh
   return `${primaryCap} ${occasionLabel} ${noun}`;
 }
 
-/** Deterministic outfit generation: no LLM call, fully explainable and testable. */
-export function generateOutfits(request: OutfitRequest, wardrobe: WardrobeItem[]): Outfit[] {
+/**
+ * Deterministic outfit generation: no LLM call, fully explainable and testable.
+ * `excludeRefIds` softly steers item picks away from ids already shown in a prior batch
+ * (falling back to reuse if no alternative exists) — this is how "Regenerate looks" surfaces
+ * different picks instead of the identical result a deterministic engine would otherwise return.
+ */
+export function generateOutfits(
+  request: OutfitRequest,
+  wardrobe: WardrobeItem[],
+  excludeRefIds: string[] = []
+): Outfit[] {
   const occasionProfile = parseOccasion(request.occasion);
   const requestStyleTags = parseStyleTags(request.style);
   const baseStyleTags = Array.from(new Set([...requestStyleTags, ...occasionProfile.defaultStyleTags]));
@@ -33,6 +42,7 @@ export function generateOutfits(request: OutfitRequest, wardrobe: WardrobeItem[]
       suggestBag: occasionProfile.suggestBag,
       constraints: emptyConstraints(),
       refinementHistory: [],
+      excludeRefIds,
     })
   );
 
@@ -51,6 +61,7 @@ export function generateOutfits(request: OutfitRequest, wardrobe: WardrobeItem[]
     suggestBag: occasionProfile.suggestBag,
     constraints: emptyConstraints(),
     refinementHistory: [],
+    excludeRefIds: [...excludeRefIds, ...outfits[0].items.map((i) => i.refId)],
   });
   if (!looksIdentical(look2, outfits[0])) outfits.push(look2);
 
@@ -67,6 +78,7 @@ export function generateOutfits(request: OutfitRequest, wardrobe: WardrobeItem[]
     suggestBag: occasionProfile.suggestBag,
     constraints: wardrobeConstraints,
     refinementHistory: [],
+    excludeRefIds: [...excludeRefIds, ...outfits.flatMap((o) => o.items.map((i) => i.refId))],
   });
   if (wardrobe.length > 0 && outfits.every((o) => !looksIdentical(look3, o))) {
     outfits.push(look3);

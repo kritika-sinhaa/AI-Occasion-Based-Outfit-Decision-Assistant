@@ -44,7 +44,10 @@ export const useAppStore = create<AppState>()(
       isDemo: false,
       hasHydrated: false,
 
-      setRequest: (request) => set({ request, isDemo: false }),
+      // Clear any outfits generated for a previous request — otherwise the Recommendations
+      // page (which only regenerates when `outfits` is empty) would keep showing stale
+      // looks that don't match the newly submitted occasion/budget/style.
+      setRequest: (request) => set({ request, isDemo: false, outfits: [], activeOutfitId: null }),
 
       loadDemoScenario: () =>
         set({
