@@ -23,11 +23,14 @@ export default function RecommendationsPage() {
     if (!request) return;
     setLoading(true);
     setError(null);
+    // On "Regenerate looks" (outfits already populated), steer away from items already shown
+    // so a second click surfaces different picks instead of the same deterministic result.
+    const excludeRefIds = outfits.flatMap((o) => o.items.map((i) => i.refId));
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ request, wardrobe }),
+        body: JSON.stringify({ request, wardrobe, excludeRefIds }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Something went wrong.");
