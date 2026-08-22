@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/lib/store/useAppStore";
 import { Gender, OutfitRequest } from "@/lib/types";
@@ -10,17 +10,35 @@ const STYLE_SUGGESTIONS = ["Minimal & Elegant", "Classic & Formal", "Boho & Casu
 
 export default function HomePage() {
   const router = useRouter();
+  const request = useAppStore((s) => s.request);
   const setRequest = useAppStore((s) => s.setRequest);
   const loadDemoScenario = useAppStore((s) => s.loadDemoScenario);
   const wardrobeCount = useAppStore((s) => s.wardrobe.length);
+  const hasHydrated = useAppStore((s) => s.hasHydrated);
 
-  const [occasion, setOccasion] = useState("");
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [budget, setBudget] = useState("");
-  const [style, setStyle] = useState("");
-  const [gender, setGender] = useState<Gender>("women");
+  const [occasion, setOccasion] = useState(request?.occasion ?? "");
+  const [location, setLocation] = useState(request?.location ?? "");
+  const [date, setDate] = useState(request?.date ?? "");
+  const [budget, setBudget] = useState(request?.budget ? String(request.budget) : "");
+  const [style, setStyle] = useState(request?.style ?? "");
+  const [gender, setGender] = useState<Gender>(request?.gender ?? "women");
   const [error, setError] = useState<string | null>(null);
+  const [prefilled, setPrefilled] = useState(false);
+
+  // The store hydrates from localStorage after first render, so an existing request
+  // (e.g. arriving here via "Edit details") isn't available on the initial useState call above —
+  // fill the form in once hydration completes.
+  useEffect(() => {
+    if (!hasHydrated || prefilled || !request) return;
+    setOccasion(request.occasion);
+    setLocation(request.location);
+    setDate(request.date);
+    setBudget(String(request.budget));
+    setStyle(request.style);
+    setGender(request.gender);
+    setPrefilled(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasHydrated, request]);
 
   function buildRequest(): OutfitRequest | null {
     if (!occasion.trim()) {
