@@ -60,6 +60,13 @@ function genderMatches(itemGender: Gender, requestGender: Gender): boolean {
   return itemGender === requestGender || itemGender === "unisex";
 }
 
+/** A wardrobe item with no recorded gender (added before this field existed, or the demo
+ *  wardrobe) is always eligible — only an item explicitly tagged for the *other* gender is
+ *  excluded, so a men's request doesn't pull in items confirmed under a women's context. */
+function wardrobeGenderMatches(itemGender: Gender | undefined, requestGender: Gender): boolean {
+  return itemGender === undefined || genderMatches(itemGender, requestGender);
+}
+
 function isExcluded(
   color: string,
   subCategory: string,
@@ -94,10 +101,15 @@ function pickWardrobeItem(
   styleTags: StyleTag[],
   colorBias: string[],
   constraints: RefinementConstraints,
+  requestGender: Gender,
   excludeRefIds: string[] = []
 ): WardrobeItem | null {
   const all = wardrobe.filter(
-    (w) => w.category === slot && w.confirmed && !isExcluded(w.color, w.subCategory, constraints)
+    (w) =>
+      w.category === slot &&
+      w.confirmed &&
+      wardrobeGenderMatches(w.gender, requestGender) &&
+      !isExcluded(w.color, w.subCategory, constraints)
   );
   // Prefer an item not already used elsewhere in this session, but fall back to the full
   // pool if that exclusion would leave no candidate at all.
@@ -219,7 +231,7 @@ export function composeOutfit(params: ComposeParams): Outfit {
 
   // Pass 1: fill required slots, wardrobe first.
   for (const slot of required) {
-    const owned = pickWardrobeItem(slot, wardrobe, styleTags, colorBias, constraints, excludeRefIds);
+    const owned = pickWardrobeItem(slot, wardrobe, styleTags, colorBias, constraints, request.gender, excludeRefIds);
     if (owned) {
       items.push(toOutfitItem(slot, "wardrobe", owned));
       continue;
@@ -279,7 +291,7 @@ export function composeOutfit(params: ComposeParams): Outfit {
 
   // Pass 2: add optional slots only if they fit within the remaining budget.
   for (const slot of optional) {
-    const owned = pickWardrobeItem(slot, wardrobe, styleTags, colorBias, constraints, excludeRefIds);
+    const owned = pickWardrobeItem(slot, wardrobe, styleTags, colorBias, constraints, request.gender, excludeRefIds);
     if (owned) {
       items.push(toOutfitItem(slot, "wardrobe", owned));
       continue;

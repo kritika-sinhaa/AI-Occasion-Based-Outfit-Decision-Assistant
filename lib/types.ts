@@ -56,6 +56,11 @@ export interface WardrobeItem {
   confirmed: boolean; // human-in-the-loop confirmation of AI-detected attributes
   source: "upload" | "demo" | "manual";
   createdAt: string;
+  /** The shopping context this item was added under (e.g. "women", "men"). Optional so
+   *  wardrobes persisted before this field existed keep working — a missing gender is treated
+   *  as unisex (always eligible) rather than excluded. "unisex" opts an item into every request
+   *  regardless of gender (e.g. a bag or watch that isn't gender-specific). */
+  gender?: Gender;
 }
 
 export interface OutfitRequest {
