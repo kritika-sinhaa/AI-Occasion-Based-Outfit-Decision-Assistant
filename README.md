@@ -90,10 +90,13 @@ Now** link as a real, working *search* deep-link on the retailer (e.g.
 `myntra.com/search?q=...`, `amazon.in/s?k=...`) — not the bare homepage. Swapping in a real
 product feed or affiliate API later only means replacing this one file.
 
-Each catalog/wardrobe item without a real uploaded photo is shown as a colored tile with a
-category icon (`components/ItemGraphic.tsx`) rather than a stock photo — a keyword-matched
-real-photo service (tried during development) turned out to return essentially unrelated
-photos for many fashion terms, which looked worse than a clean placeholder for a mock listing.
+Each catalog/wardrobe item without a real uploaded photo is shown as a colored tile with an
+item-specific illustration (`components/CategoryIcon.tsx`) rather than a stock photo — a
+keyword-matched real-photo service (tried during development) turned out to return essentially
+unrelated photos for many fashion terms, which looked worse than a clean placeholder for a mock
+listing. Every recommended slot carries its exact `subCategory` (heels vs. sneakers, blazer vs.
+coat, tote vs. clutch, ...) through from the engine to the UI, so ~30 distinct illustrations —
+not one generic icon per broad category — visibly track what the engine actually picked.
 
 ### Wardrobe image analysis
 

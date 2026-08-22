@@ -5,12 +5,14 @@ import clsx from "clsx";
 
 export function ItemGraphic({
   category,
+  subCategory,
   color,
   className,
   imageDataUrl,
   size = "md",
 }: {
   category: ClothingCategory;
+  subCategory?: string;
   color: string;
   className?: string;
   imageDataUrl?: string;
@@ -36,7 +38,7 @@ export function ItemGraphic({
       className={clsx("flex h-full w-full items-center justify-center", className)}
       style={{ backgroundColor: hex }}
     >
-      <CategoryIcon category={category} className={iconSize} />
+      <CategoryIcon category={category} subCategory={subCategory} className={iconSize} />
       <style jsx>{`
         div :global(svg) {
           color: ${iconColor};

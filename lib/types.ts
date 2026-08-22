@@ -75,6 +75,7 @@ export type OutfitItemSource = "wardrobe" | "catalog";
 
 export interface OutfitItem {
   slot: ClothingCategory;
+  subCategory: string; // e.g. "heels", "blazer" — drives the specific item illustration
   source: OutfitItemSource;
   refId: string; // wardrobe item id or product id
   name: string;
