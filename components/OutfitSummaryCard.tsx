@@ -19,12 +19,7 @@ export function OutfitSummaryCard({
       <div className="grid grid-cols-2 gap-0.5 bg-ink/5 p-0.5">
         {outfit.items.slice(0, 4).map((item) => (
           <div key={`${item.slot}-${item.refId}`} className="relative aspect-square overflow-hidden">
-            <ItemGraphic
-              category={item.slot}
-              color={item.color}
-              imageDataUrl={item.imageDataUrl}
-              imageUrl={item.imageUrl}
-            />
+            <ItemGraphic category={item.slot} color={item.color} imageDataUrl={item.imageDataUrl} />
             {item.source === "wardrobe" && (
               <span className="absolute left-1 top-1 rounded-full bg-moss px-1.5 py-0.5 text-[9px] font-semibold uppercase text-cream">
                 Owned
