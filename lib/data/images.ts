@@ -56,19 +56,20 @@ const CATEGORY_KEYWORDS: Record<ClothingCategory, string> = {
   accessory: "accessory,fashion",
 };
 
-function genderKeyword(gender: Gender): string {
+function genderKeyword(gender?: Gender): string {
   return gender === "men" ? "men" : gender === "women" ? "women" : "";
 }
 
+/** `gender` is omitted for wardrobe items, which have no gender field of their own. */
 export function buildImageUrl(
   category: ClothingCategory,
   subCategory: string,
-  gender: Gender
+  gender?: Gender
 ): string {
   const base = SUBCATEGORY_KEYWORDS[subCategory.toLowerCase()] ?? CATEGORY_KEYWORDS[category];
   const tags = [base, genderKeyword(gender)].filter(Boolean).join(",");
   // Fixed per-lock so the same product always resolves to the same photo across renders.
-  const lock = Math.abs(hashCode(`${category}:${subCategory}:${gender}`)) % 100000;
+  const lock = Math.abs(hashCode(`${category}:${subCategory}:${gender ?? ""}`)) % 100000;
   return `https://loremflickr.com/400/400/${encodeURIComponent(tags)}?lock=${lock}`;
 }
 

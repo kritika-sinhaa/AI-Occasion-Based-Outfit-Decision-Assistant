@@ -7,6 +7,7 @@ import { useAppStore } from "@/lib/store/useAppStore";
 import { processUpload } from "@/lib/ai/processUpload";
 import { ClothingCategory, StyleTag, WardrobeItem } from "@/lib/types";
 import { ItemGraphic } from "@/components/ItemGraphic";
+import { buildImageUrl } from "@/lib/data/images";
 import { COLOR_HEX } from "@/lib/ui/colors";
 import clsx from "clsx";
 
@@ -252,7 +253,12 @@ function ConfirmedCard({ item, onRemove }: { item: WardrobeItem; onRemove: () =>
   return (
     <div className="card group relative overflow-hidden">
       <div className="aspect-square">
-        <ItemGraphic category={item.category} color={item.color} imageDataUrl={item.imageDataUrl} />
+        <ItemGraphic
+          category={item.category}
+          color={item.color}
+          imageDataUrl={item.imageDataUrl}
+          imageUrl={item.imageDataUrl ? undefined : buildImageUrl(item.category, item.subCategory)}
+        />
       </div>
       <div className="p-2.5">
         <p className="truncate text-xs font-medium text-ink">{item.name}</p>

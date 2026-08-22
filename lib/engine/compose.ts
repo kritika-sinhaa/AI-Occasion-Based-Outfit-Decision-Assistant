@@ -10,6 +10,7 @@ import {
   WardrobeItem,
 } from "@/lib/types";
 import { getCatalog } from "@/lib/data/catalog";
+import { buildImageUrl } from "@/lib/data/images";
 import { Silhouette } from "@/lib/engine/parse";
 import { explainOutfit } from "@/lib/ai/explain";
 import { v4 as uuid } from "uuid";
@@ -150,6 +151,9 @@ function toOutfitItem(slot: ClothingCategory, source: "wardrobe" | "catalog", it
       color: w.color,
       price: 0,
       image: `${w.category}:${w.color}`,
+      // Stand-in stock photo for wardrobe items with no real upload (e.g. the demo wardrobe).
+      // ItemGraphic prefers imageDataUrl, so a real upload always wins over this.
+      imageUrl: w.imageDataUrl ? undefined : buildImageUrl(w.category, w.subCategory),
       imageDataUrl: w.imageDataUrl,
     };
   }
