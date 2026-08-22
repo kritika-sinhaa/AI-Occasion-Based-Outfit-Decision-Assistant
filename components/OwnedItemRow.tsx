@@ -5,7 +5,7 @@ export function OwnedItemRow({ item }: { item: OutfitItem }) {
   return (
     <div className="flex items-center gap-3 rounded-xl border border-ink/8 bg-white p-2.5">
       <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg">
-        <ItemGraphic category={item.slot} color={item.color} imageDataUrl={item.imageDataUrl} />
+        <ItemGraphic category={item.slot} subCategory={item.subCategory} color={item.color} imageDataUrl={item.imageDataUrl} />
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-medium text-ink">{item.name}</p>

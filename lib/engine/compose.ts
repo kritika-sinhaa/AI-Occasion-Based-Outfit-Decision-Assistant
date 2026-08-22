@@ -176,6 +176,7 @@ function toOutfitItem(slot: ClothingCategory, source: "wardrobe" | "catalog", it
     const w = item as WardrobeItem;
     return {
       slot,
+      subCategory: w.subCategory,
       source: "wardrobe",
       refId: w.id,
       name: w.name,
@@ -188,6 +189,7 @@ function toOutfitItem(slot: ClothingCategory, source: "wardrobe" | "catalog", it
   const pr = item as Product;
   return {
     slot,
+    subCategory: pr.subCategory,
     source: "catalog",
     refId: pr.id,
     name: pr.name,

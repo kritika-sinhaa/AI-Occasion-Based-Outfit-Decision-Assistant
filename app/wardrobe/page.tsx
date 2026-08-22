@@ -173,7 +173,7 @@ function PendingCard({
     <div className="card overflow-hidden">
       <div className="flex gap-4 p-4">
         <div className="h-24 w-24 shrink-0 overflow-hidden rounded-lg">
-          <ItemGraphic category={item.category} color={item.color} imageDataUrl={item.imageDataUrl} />
+          <ItemGraphic category={item.category} subCategory={item.subCategory} color={item.color} imageDataUrl={item.imageDataUrl} />
         </div>
         <div className="flex-1 space-y-2">
           <div className="flex items-center justify-between">
@@ -256,7 +256,7 @@ function ConfirmedCard({ item, onRemove }: { item: WardrobeItem; onRemove: () =>
   return (
     <div className="card group relative overflow-hidden">
       <div className="aspect-square">
-        <ItemGraphic category={item.category} color={item.color} imageDataUrl={item.imageDataUrl} />
+        <ItemGraphic category={item.category} subCategory={item.subCategory} color={item.color} imageDataUrl={item.imageDataUrl} />
       </div>
       <div className="p-2.5">
         <p className="truncate text-xs font-medium text-ink">{item.name}</p>
