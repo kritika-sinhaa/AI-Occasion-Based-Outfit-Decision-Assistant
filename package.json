@@ -1,0 +1,31 @@
+{
+  "name": "styleease",
+  "version": "0.1.0",
+  "private": true,
+  "description": "StyleEase — AI Occasion-Based Outfit Decision Assistant",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "next": "14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "uuid": "^14.0.2",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.15",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^3.4.9",
+    "typescript": "^5.5.4"
+  }
+}
