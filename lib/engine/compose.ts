@@ -33,6 +33,10 @@ export interface ComposeParams {
    *  a fully deterministic engine would otherwise return. Falls back to the excluded item if it's
    *  the only candidate, so a look is never left unfillable just to satisfy this preference. */
   excludeRefIds?: string[];
+  /** Preserves an existing outfit's id across a refinement — the store's updateOutfit replaces
+   *  an outfit by matching id, so a refined outfit must keep the original's id or the update is
+   *  silently dropped. Omitted (a fresh uuid is generated) when composing a brand-new look. */
+  id?: string;
 }
 
 const EMPTY_CONSTRAINTS: RefinementConstraints = {
@@ -48,7 +52,7 @@ export function emptyConstraints(): RefinementConstraints {
   return { ...EMPTY_CONSTRAINTS, addStyleTags: [], removeStyleTags: [], excludeColors: [], excludeSubCategories: [], preferSubCategorySubstitutions: {} };
 }
 
-function requiredSlots(silhouette: Silhouette): ClothingCategory[] {
+export function requiredSlots(silhouette: Silhouette): ClothingCategory[] {
   return silhouette === "dress" ? ["dress", "footwear"] : ["top", "bottom", "footwear"];
 }
 
@@ -301,7 +305,7 @@ export function composeOutfit(params: ComposeParams): Outfit {
   const totalCost = toBuyItems.reduce((s, i) => s + i.price, 0);
 
   const outfit: Outfit = {
-    id: uuid(),
+    id: params.id ?? uuid(),
     lookName,
     items,
     ownedItems,
