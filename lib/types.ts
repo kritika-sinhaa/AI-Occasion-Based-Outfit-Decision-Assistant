@@ -39,7 +39,6 @@ export interface Product {
   /** Real, working deep-link (search/category URL) on the retailer — not the bare homepage. */
   url: string;
   image: string; // placeholder illustration (data uri / css gradient key)
-  imageUrl: string; // stock photo URL standing in for real product photography
   isDemoData: true;
 }
 
@@ -82,7 +81,6 @@ export interface OutfitItem {
   color: string;
   price: number; // 0 if owned
   image: string;
-  imageUrl?: string; // stock photo standing in for real product photography (catalog items)
   imageDataUrl?: string; // present when sourced from a user-uploaded wardrobe photo
   platform?: Platform;
   url?: string;

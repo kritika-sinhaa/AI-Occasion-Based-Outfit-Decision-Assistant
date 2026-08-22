@@ -107,12 +107,7 @@ export default function OutfitDetailPage() {
       <div className="animate-in mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4" style={{ animationDelay: "100ms" }}>
         {outfit.items.map((item) => (
           <div key={`${item.slot}-${item.refId}`} className="aspect-square overflow-hidden rounded-xl2">
-            <ItemGraphic
-              category={item.slot}
-              color={item.color}
-              imageDataUrl={item.imageDataUrl}
-              imageUrl={item.imageUrl}
-            />
+            <ItemGraphic category={item.slot} color={item.color} imageDataUrl={item.imageDataUrl} />
           </div>
         ))}
       </div>

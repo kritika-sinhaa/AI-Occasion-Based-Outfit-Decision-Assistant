@@ -90,10 +90,10 @@ Now** link as a real, working *search* deep-link on the retailer (e.g.
 `myntra.com/search?q=...`, `amazon.in/s?k=...`) — not the bare homepage. Swapping in a real
 product feed or affiliate API later only means replacing this one file.
 
-Each item's photo (`lib/data/images.ts`) is a real stock photo pulled by category/color/
-gender keyword (via LoremFlickr) rather than a specific, hand-picked product image — there's
-no live photography for mock listings. If a photo fails to load, the UI falls back to a
-colored icon tile instead of a broken image.
+Each catalog/wardrobe item without a real uploaded photo is shown as a colored tile with a
+category icon (`components/ItemGraphic.tsx`) rather than a stock photo — a keyword-matched
+real-photo service (tried during development) turned out to return essentially unrelated
+photos for many fashion terms, which looked worse than a clean placeholder for a mock listing.
 
 ### Wardrobe image analysis
 
