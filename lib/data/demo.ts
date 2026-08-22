@@ -29,6 +29,7 @@ function demoItem(
     confirmed: true,
     source: "demo",
     createdAt: new Date().toISOString(),
+    gender: DEMO_REQUEST.gender,
   };
 }
 

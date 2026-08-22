@@ -19,6 +19,7 @@ type PendingItem = WardrobeItem & { confidence: number };
 
 export default function WardrobePage() {
   const router = useRouter();
+  const request = useAppStore((s) => s.request);
   const wardrobe = useAppStore((s) => s.wardrobe);
   const addWardrobeItem = useAppStore((s) => s.addWardrobeItem);
   const updateWardrobeItem = useAppStore((s) => s.updateWardrobeItem);
@@ -48,6 +49,9 @@ export default function WardrobePage() {
           source: "upload",
           createdAt: new Date().toISOString(),
           confidence: detected.confidence,
+          // Tags the item with the shopping context it was added under, so switching gender
+          // on a later request doesn't pull in items confirmed for a different one.
+          gender: request?.gender,
         });
       } catch {
         // Skip unreadable files silently — the user still sees the ones that worked.
