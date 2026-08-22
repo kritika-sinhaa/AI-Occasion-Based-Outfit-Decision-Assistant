@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #faf7f2;
+  color: #1c1a17;
+}
+
+::selection {
+  background-color: #b08968;
+  color: #faf7f2;
+}
+
+.container-app {
+  @apply mx-auto w-full max-w-md sm:max-w-2xl lg:max-w-5xl px-4 sm:px-6;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-cream transition-all hover:bg-ink/85 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-white px-6 py-3 text-sm font-medium text-ink transition-all hover:border-ink/40 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-ink/70 transition-all hover:text-ink hover:bg-ink/5;
+}
+
+.card {
+  @apply rounded-xl2 border border-ink/8 bg-white shadow-card;
+}
+
+.input-field {
+  @apply w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] text-ink placeholder:text-ink/35 outline-none transition focus:border-clay focus:ring-2 focus:ring-clay/20;
+}
+
+.label-text {
+  @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-ink/50;
+}
+
+.pill {
+  @apply inline-flex items-center gap-1 rounded-full border border-ink/12 bg-cream-dark px-3 py-1 text-xs font-medium text-ink/70;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #eee3d3 0px, #f6efe4 40px, #eee3d3 80px);
+  background-size: 600px;
+  @apply animate-shimmer;
+}
+
+.animate-in {
+  animation: fadeUp 0.5s ease forwards;
+}
