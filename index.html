@@ -427,6 +427,16 @@
 </main>
 
 <script>
+  // Scroll to in-page sections without adding #section to the address bar
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const target = document.getElementById(a.getAttribute('href').slice(1));
+    if (!target) return;
+    e.preventDefault();
+    if (target.id === 'top') window.scrollTo({ top: 0, behavior: 'smooth' });
+    else target.scrollIntoView({ behavior: 'smooth' });
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  }));
+
   const tabs = document.querySelectorAll('.tab');
   const items = document.querySelectorAll('.item');
   tabs.forEach(tab => tab.addEventListener('click', () => {
