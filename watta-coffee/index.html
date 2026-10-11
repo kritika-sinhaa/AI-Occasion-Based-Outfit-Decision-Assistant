@@ -5,13 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Watta Coffee — Coffee | Matcha | Ube · HSR 2.0, Bengaluru</title>
 <meta name="description" content="Watta Coffee: specialty Arabica, ceremonial-grade matcha and ube, served iced. HSR 2.0, opposite Aromas of Biryani, Bengaluru. Open 6pm to 12am. Good drinks. Better days.">
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --purple:#4b2683;
-    --purple-deep:#2f1659;
+    --purple:#543c88;
+    --purple-deep:#36245e;
     --lilac:#d8ccef;
     --lilac-soft:#ece5f7;
     --cream:#f6efe0;
@@ -61,16 +63,11 @@
   .hero .hand-note{font-size:clamp(28px,3.4vw,38px);margin-top:14px;transform:rotate(-2deg);display:inline-block;color:var(--matcha-deep)}
   .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
   .hero-art{text-align:center}
-  .hero-art svg{width:100%;max-width:400px;margin:0 auto;height:auto}
-  .logo-word{font-family:var(--serif);font-weight:900;font-size:clamp(64px,9vw,108px);line-height:.95;letter-spacing:.005em;margin-top:4px}
-  .logo-sub{font-family:var(--body);font-weight:700;letter-spacing:.32em;font-size:clamp(11px,1.4vw,14px);margin-top:6px}
-  .logo-sub.big{font-family:var(--serif);font-weight:800;letter-spacing:.42em;font-size:clamp(14px,1.8vw,20px);margin-top:4px}
+  .hero-logo{width:100%;max-width:440px;height:auto;margin:0 auto;animation:bob 4s ease-in-out infinite}
+  @media (prefers-reduced-motion:reduce){.hero-logo{animation:none}}
   .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
   .fact{display:flex;align-items:center;gap:8px;background:var(--cream-2);border:1.5px solid var(--lilac);border-radius:16px;padding:10px 14px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-  .bob{animation:bob 3.2s ease-in-out infinite}
-  .bob2{animation:bob 3.2s ease-in-out infinite;animation-delay:-1.6s}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-  @media (prefers-reduced-motion:reduce){.bob,.bob2{animation:none}}
   @media (max-width:860px){.hero{grid-template-columns:1fr;padding:34px 22px 40px}.hero-art{order:-1}}
 
   /* MARQUEE */
@@ -174,7 +171,7 @@
   @media (max-width:860px){.visit{grid-template-columns:1fr;padding:36px 22px}}
 
   footer{color:var(--cream);text-align:center;padding:36px 16px 8px}
-  footer .brand{font-size:52px;display:block}
+  .foot-logo{width:220px;height:auto;margin:0 auto 6px}
   footer .tagline{font-family:var(--hand);font-size:32px;font-weight:700;color:var(--lilac);margin:4px 0 12px}
   footer .caps{font-size:11px;opacity:.85}
   footer .caps a{text-underline-offset:4px}
@@ -184,7 +181,7 @@
 
 <nav aria-label="Main">
   <div class="nav-in">
-    <a class="brand" href="#top">WATTA</a>
+    <a class="brand" href="#top"><img src="assets/wordmark-white.png" width="130" height="27" alt="Watta"></a>
     <ul class="nav-links">
       <li><a href="#menu">Menu</a></li>
       <li class="hide-sm"><a href="#story">Story</a></li>
@@ -215,31 +212,7 @@
     </div>
 
     <div class="hero-art">
-      <svg viewBox="0 0 420 250" role="img" aria-label="Watta's two mascots, a smiling takeaway cup and a smiling coffee mug, walking together">
-        <g class="bob" fill="none" stroke="#4b2683" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M92 42 h96 l-4 26 h-88z" fill="#f6efe0"/>
-          <path d="M100 68 h80 l-12 130 h-56z" fill="#f6efe0"/>
-          <path d="M104 98 h72 l-6 64 h-60z" fill="#4b2683"/>
-          <path d="M125 120 q4 -6 8 0 M147 120 q4 -6 8 0" stroke="#f6efe0"/>
-          <path d="M126 136 q14 14 28 0" stroke="#f6efe0"/>
-          <path d="M100 130 q-26 6 -30 -18 M70 112 l-8 -6 M70 112 l-2 -10"/>
-          <path d="M180 130 q26 6 34 -12 M214 118 l8 -4 M214 118 l2 -10"/>
-          <path d="M126 198 v24 h-14 M154 198 v24 h14"/>
-        </g>
-        <g class="bob2" fill="none" stroke="#4b2683" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M250 82 h110 v58 a55 55 0 0 1 -110 0z" fill="#4b2683"/>
-          <path d="M360 100 q30 0 28 24 q-2 22 -30 22"/>
-          <ellipse cx="305" cy="82" rx="55" ry="12" fill="#f6efe0"/>
-          <path d="M290 60 q10 -18 0 -34 M314 58 q10 -16 0 -30" stroke-width="4"/>
-          <path d="M282 122 q4 -6 8 0 M318 122 q4 -6 8 0" stroke="#f6efe0"/>
-          <path d="M288 140 q17 16 34 0" stroke="#f6efe0"/>
-          <path d="M252 140 q-22 4 -28 -14"/>
-          <path d="M290 192 l-10 30 h-14 M322 192 l12 28 h14"/>
-        </g>
-      </svg>
-      <div class="logo-word">WATTA</div>
-      <div class="logo-sub big">COFFEE</div>
-      <div class="logo-sub">COFFEE &nbsp;|&nbsp; MATCHA &nbsp;|&nbsp; UBE</div>
+      <img class="hero-logo" src="assets/logo-purple.png" width="900" height="694" alt="Watta logo: a smiling takeaway cup and a smiling coffee cup above the word WATTA, with Coffee | Matcha | Ube">
     </div>
   </section>
 
@@ -341,17 +314,17 @@
 
     <div class="pillars" aria-label="What we pour">
       <div class="card">
-        <svg viewBox="0 0 72 72" fill="none" stroke="#4b2683" stroke-width="4" aria-hidden="true"><ellipse cx="26" cy="36" rx="14" ry="20" transform="rotate(-25 26 36)"/><path d="M20 20 q14 16 12 34"/><ellipse cx="50" cy="38" rx="12" ry="18" transform="rotate(20 50 38)"/><path d="M54 22 q-12 14 -8 32"/></svg>
+        <svg viewBox="0 0 72 72" fill="none" stroke="#543c88" stroke-width="4" aria-hidden="true"><ellipse cx="26" cy="36" rx="14" ry="20" transform="rotate(-25 26 36)"/><path d="M20 20 q14 16 12 34"/><ellipse cx="50" cy="38" rx="12" ry="18" transform="rotate(20 50 38)"/><path d="M54 22 q-12 14 -8 32"/></svg>
         <h3>Coffee</h3>
         <p>Specialty Arabica on Baarbara beans, from a clean Americano to a rich Viet Rush with condensed milk.</p>
       </div>
       <div class="card">
-        <svg viewBox="0 0 72 72" fill="none" stroke="#4b2683" stroke-width="4" stroke-linejoin="round" aria-hidden="true"><path d="M14 30 h44 l-6 30 h-32z"/><path d="M24 30 q2 -12 12 -12 q10 0 12 12"/><path d="M36 18 v-8 M30 12 h12"/></svg>
+        <svg viewBox="0 0 72 72" fill="none" stroke="#543c88" stroke-width="4" stroke-linejoin="round" aria-hidden="true"><path d="M14 30 h44 l-6 30 h-32z"/><path d="M24 30 q2 -12 12 -12 q10 0 12 12"/><path d="M36 18 v-8 M30 12 h12"/></svg>
         <h3>Matcha</h3>
         <p>Ceremonial-grade matcha, poured plain or with mango, strawberry or ube.</p>
       </div>
       <div class="card">
-        <svg viewBox="0 0 72 72" aria-hidden="true"><path d="M22 20 h28 l-4 44 h-20z" fill="#4b2683" stroke="#4b2683" stroke-width="4" stroke-linejoin="round"/><path d="M26 34 h20" stroke="#d8ccef" stroke-width="6"/><path d="M40 20 l6 -14" stroke="#4b2683" stroke-width="4" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 72 72" aria-hidden="true"><path d="M22 20 h28 l-4 44 h-20z" fill="#543c88" stroke="#543c88" stroke-width="4" stroke-linejoin="round"/><path d="M26 34 h20" stroke="#d8ccef" stroke-width="6"/><path d="M40 20 l6 -14" stroke="#543c88" stroke-width="4" stroke-linecap="round"/></svg>
         <h3>Ube</h3>
         <p>The purple yam behind our colour. Sweet, nutty, and stirred into both coffee and matcha.</p>
       </div>
@@ -415,7 +388,7 @@
         <b>watta events</b>
       </a>
       <a class="hl" href="https://www.instagram.com/wattacoffee/" target="_blank" rel="noopener" title="Reviews from our customers, shared as Instagram stories">
-        <div class="ring"><div class="inner"><svg viewBox="0 0 56 56" fill="none" stroke="#4b2683" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 12 h36 a4 4 0 0 1 4 4 v20 a4 4 0 0 1 -4 4 h-20 l-10 8 v-8 h-6 a4 4 0 0 1 -4 -4 v-20 a4 4 0 0 1 4 -4z"/><path d="M28 18 l2.6 5.4 5.9 .8 -4.3 4.1 1 5.8 -5.2 -2.8 -5.2 2.8 1 -5.8 -4.3 -4.1 5.9 -.8z" fill="#4b2683" stroke-width="1.5"/></svg></div></div>
+        <div class="ring"><div class="inner"><svg viewBox="0 0 56 56" fill="none" stroke="#543c88" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 12 h36 a4 4 0 0 1 4 4 v20 a4 4 0 0 1 -4 4 h-20 l-10 8 v-8 h-6 a4 4 0 0 1 -4 -4 v-20 a4 4 0 0 1 4 -4z"/><path d="M28 18 l2.6 5.4 5.9 .8 -4.3 4.1 1 5.8 -5.2 -2.8 -5.2 2.8 1 -5.8 -4.3 -4.1 5.9 -.8z" fill="#543c88" stroke-width="1.5"/></svg></div></div>
         <b>watta experiences</b>
       </a>
       <a class="hl" href="https://www.instagram.com/wattacoffee/" target="_blank" rel="noopener">
@@ -446,9 +419,9 @@
   </section>
 
   <footer>
-    <span class="brand">WATTA</span>
+    <img class="foot-logo" src="assets/logo-white.png" width="700" height="540" alt="Watta Coffee logo">
     <div class="tagline">Good drinks. Better days.</div>
-    <div class="caps">Coffee | Matcha | Ube · HSR 2.0, Bengaluru</div>
+    <div class="caps">HSR 2.0, opp. Aromas of Biryani · Bengaluru</div>
     <div class="caps" style="margin-top:8px">Founded by <a href="https://www.linkedin.com/in/rishika-pahuja-0628531a0/" target="_blank" rel="noopener">Rishika Pahuja</a></div>
   </footer>
 </main>
