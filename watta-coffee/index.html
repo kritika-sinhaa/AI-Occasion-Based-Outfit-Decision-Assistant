@@ -146,15 +146,15 @@
   /* INSTAGRAM */
   .gram{padding:52px}
   .highlights{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px}
-  .hl{text-decoration:none;text-align:center;width:120px}
+  .hl{text-decoration:none;text-align:center;min-width:120px}
   .hl .ring{width:104px;height:104px;margin:0 auto 10px;border-radius:50%;padding:4px;background:conic-gradient(var(--purple),var(--berry),var(--matcha),var(--purple))}
   .hl .inner{width:100%;height:100%;border-radius:50%;background:var(--cream);border:3px solid var(--cream);display:grid;place-items:center;overflow:hidden}
   .hl .inner svg{width:56px;height:56px}
-  .hl b{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:lowercase}
+  .hl b{white-space:nowrap;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:lowercase}
   .gram-row{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:18px}
   .gram .handle{font-family:var(--serif);font-weight:900;font-size:clamp(34px,5vw,56px);line-height:1}
   .gram .bio{margin-top:12px;font-size:14px;line-height:1.8}
-  @media (max-width:860px){.gram{padding:36px 22px}.highlights{gap:14px}.hl{width:96px}.hl .ring{width:86px;height:86px}}
+  @media (max-width:860px){.gram{padding:36px 22px}.highlights{gap:14px}.hl{min-width:96px}.hl .ring{width:86px;height:86px}}
 
   /* VISIT */
   .visit{padding:52px;display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center}
@@ -396,9 +396,9 @@
         <div class="ring"><div class="inner"><svg viewBox="0 0 56 56" fill="none" stroke="#2f6b2a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 22 h40 v24 h-40z"/><path d="M8 22 l6 -10 h28 l6 10"/><path d="M20 22 v24 M36 22 v24"/></svg></div></div>
         <b>watta events</b>
       </a>
-      <a class="hl" href="https://www.instagram.com/wattacoffee/" target="_blank" rel="noopener">
-        <div class="ring"><div class="inner"><svg viewBox="0 0 56 56" fill="none" stroke="#4b2683" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8 h12 M24 8 v14 l-12 22 a3 3 0 0 0 3 4 h26 a3 3 0 0 0 3 -4 l-12 -22 v-14"/><path d="M17 36 h22"/></svg></div></div>
-        <b>watta experiments</b>
+      <a class="hl" href="https://www.instagram.com/wattacoffee/" target="_blank" rel="noopener" title="Reviews from our customers, shared as Instagram stories">
+        <div class="ring"><div class="inner"><svg viewBox="0 0 56 56" fill="none" stroke="#4b2683" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 12 h36 a4 4 0 0 1 4 4 v20 a4 4 0 0 1 -4 4 h-20 l-10 8 v-8 h-6 a4 4 0 0 1 -4 -4 v-20 a4 4 0 0 1 4 -4z"/><path d="M28 18 l2.6 5.4 5.9 .8 -4.3 4.1 1 5.8 -5.2 -2.8 -5.2 2.8 1 -5.8 -4.3 -4.1 5.9 -.8z" fill="#4b2683" stroke-width="1.5"/></svg></div></div>
+        <b>watta experiences</b>
       </a>
       <a class="hl" href="https://www.instagram.com/wattacoffee/" target="_blank" rel="noopener">
         <div class="ring"><div class="inner"><svg viewBox="0 0 56 56" fill="none" stroke="#d6457f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M28 48 c-14 -8 -18 -20 -14 -28 c4 -6 12 -6 14 2 c2 -8 10 -8 14 -2 c4 8 0 20 -14 28z"/><path d="M28 14 c0 -4 3 -7 7 -8"/></svg></div></div>
