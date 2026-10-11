@@ -119,6 +119,17 @@
   .pillars p{font-size:14px}
   @media (max-width:860px){.story{grid-template-columns:1fr}.story-main{padding:36px 22px}.founder{padding:34px 22px}.pillars{grid-template-columns:1fr}}
 
+  /* REVIEWS */
+  .reviews{margin-top:20px;background:var(--purple-deep);color:var(--cream);border-radius:var(--radius);padding:52px;display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+  .reviews h2{color:var(--cream)}
+  .reviews p{font-size:15px;line-height:1.75;max-width:520px;margin-top:16px;color:var(--lilac-soft)}
+  .reviews .hand{color:var(--lilac);font-size:32px;display:block;margin-top:14px;transform:rotate(-1.5deg)}
+  .bubble{background:var(--cream);color:var(--purple);border-radius:26px 26px 26px 6px;padding:28px;text-align:center}
+  .bubble .stars{font-size:26px;letter-spacing:.2em;color:var(--purple)}
+  .bubble strong{display:block;font-family:var(--display);font-weight:900;font-size:24px;text-transform:uppercase;line-height:1.1;margin:10px 0 6px}
+  .bubble span{display:block;font-size:13px;margin-bottom:18px}
+  @media (max-width:860px){.reviews{grid-template-columns:1fr;padding:36px 22px}}
+
   /* POP-UPS */
   .popup{margin-top:20px;border-radius:var(--radius);overflow:hidden;background:var(--berry-soft);position:relative}
   .popup-top{padding:52px 52px 36px;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center}
@@ -177,6 +188,7 @@
     <ul class="nav-links">
       <li><a href="#menu">Menu</a></li>
       <li class="hide-sm"><a href="#story">Story</a></li>
+      <li class="hide-sm"><a href="#reviews">Reviews</a></li>
       <li class="hide-sm"><a href="#popups">Pop-ups</a></li>
       <li><a href="#visit">Visit</a></li>
       <li class="hide-sm"><span class="open-pill">6pm – 12am</span></li>
@@ -343,6 +355,22 @@
         <h3>Ube</h3>
         <p>The purple yam behind our colour. Sweet, nutty, and stirred into both coffee and matcha.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews" id="reviews" aria-labelledby="reviews-h">
+    <div>
+      <span class="chip">Real feedback</span>
+      <h2 class="big" id="reviews-h" style="margin-top:16px;font-size:clamp(40px,6vw,76px)">Don't take<br>our word<br>for it.</h2>
+      <p>We share feedback from the people who stop by the stall in our <strong>watta experiences</strong> highlight on Instagram. Go see what they had to say.</p>
+      <span class="hand">real sips, real people 💜</span>
+    </div>
+    <div class="bubble">
+      <div class="stars" aria-hidden="true">💬</div>
+      <strong>Watta experiences</strong>
+      <span>Open our Instagram and tap the <b>watta experiences</b> highlight to read real customer feedback.</span>
+      <a class="btn solid" href="https://www.instagram.com/wattacoffee/" target="_blank" rel="noopener">Read reviews on Instagram →</a>
     </div>
   </section>
 
